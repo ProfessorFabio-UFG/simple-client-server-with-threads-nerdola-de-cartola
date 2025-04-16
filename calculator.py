@@ -40,13 +40,15 @@ class Calculator:
 
     def compute(self):
         match self.operator:
-            case Operation.ADD:
+            case Operation.ADD.value:
                 return self.operand1 + self.operand2
-            case Operation.SUBTRACT:
+            case Operation.SUBTRACT.value:
                 return self.operand1 - self.operand2
-            case Operation.MULTIPLY:
+            case Operation.MULTIPLY.value:
                 return self.operand1 * self.operand2
-            case Operation.DIVIDE:
+            case Operation.DIVIDE.value:
+                if self.operand2 == 0:
+                    return 'Nan'
                 return self.operand1 / self.operand2
             case _:
                 raise ValueError("Unsupported operator.")
