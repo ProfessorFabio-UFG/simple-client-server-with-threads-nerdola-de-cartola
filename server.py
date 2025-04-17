@@ -23,15 +23,30 @@ class Server:
     return (data[0], data[1])
 
   def get_data(self):
+      if self.buffer[0] != "|":
+        print(f"{RED} buffer: {self.buffer} {RESET}")
+        raise Exception(f"{RED} data not starting with | {RESET}")
+
       data = ""
       i = 0
+      valid = False
+      processing = False
 
       for char in self.buffer:
         i += 1
+
         if char == "|":
-          break
+          if processing:
+            valid = True
+            break
+
+          processing = True
+
 
         data += char
+
+      if not valid:
+        return ""
 
       self.buffer = self.buffer[i:]
       return data
@@ -46,6 +61,7 @@ class Server:
 
       while self.buffer != "":
         data = self.get_data()
+        if not data: break
         self.handle_connection(data)
 
       self.buffer += self.conn.recv(1024).decode()
@@ -59,9 +75,9 @@ class Server:
     (req_id, expression) = self.parse_req(data)
     print(f"Request {req_id}, received: {expression}")
 
-    time.sleep(1)
+    time.sleep(SLEEP_TIME)
     calc = parse_expression(expression)
-    res = f"{req_id},{calc.compute()}|"
+    res = f"|{req_id},{calc.compute()}|"
     self.conn.send(res.encode())
 
   def handle_connection(self, data):

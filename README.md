@@ -8,7 +8,7 @@ Já na abordagem com threads, o cliente fará todas as requisições em paralelo
 
 ## Como usar
 
-Você pode configurar a aplicação alterando os valores no arquivo **constCS.py**, a variável **NUMBER_OF_REQUESTS** define quantas requisições o cliente fará antes de encerrar a conexão com o servidor. E a variável **THREADS** define se o processamente será paralelo ou sequêncial.  
+Você pode configurar a aplicação alterando os valores no arquivo **constCS.py**, a variável **NUMBER_OF_REQUESTS** define quantas requisições o cliente fará antes de encerrar a conexão com o servidor. E a variável **THREADS** define se o processamente será paralelo ou sequêncial. a variável **SLEEP_TIME** define quanto tempo em segundo o servidor ficará dormindo para cada requisição, simulando assim uma carga de trabalho considerável em cada requisição.
 
 Para rodar a aplicação basta executar em seu terminal
 ```bash
@@ -22,6 +22,5 @@ python client.py
 
 Se você deseja medir o tempo de execução faça
 ```bash
-time python server.py
 time python client.py
 ```

@@ -21,7 +21,7 @@ class Client:
 
     def make_request(self, operand1, operation, operand2, req_id):
         expression = encode_expression(operand1, operation, operand2)
-        req = f"{req_id},{expression}|"
+        req = f"|{req_id},{expression}|"
         self.s.send(req.encode())
         self.requests.append((req_id, expression))
 
@@ -46,7 +46,7 @@ class Client:
         while True:
             try:
                 buffer += self.s.recv(1024).decode()
-                if len(buffer.split("|")) == NUMBER_OF_REQUESTS + 1:
+                if len(buffer.split("|")) == NUMBER_OF_REQUESTS*3 + 1:
                     break
             except Exception as e:
                 #print(e)
